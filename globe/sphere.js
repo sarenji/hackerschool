@@ -32,7 +32,7 @@ camera.lookAt(scene.position);
 scene.add(camera);
 
 var controls = new THREE.TrackballControls(camera);
-controls.keys = [65, 83, 68];
+controls.keys = [];
 
 // create fresnel shader
 var Shaders = {
