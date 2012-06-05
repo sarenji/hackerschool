@@ -5,18 +5,32 @@
   <script src="./Three.js"></script>
   <script src="./jquery.js"></script>
   <style type="text/css">
-    html {
+    html, body {
       padding: 0;
       margin: 0;
       background: black;
+      font: 100% "Helvetica Neue", sans-serif;
     }
     h1 {
       color: white;
+      font-weight: 300;
+      margin-top: 0;
+    }
+    #ui {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 200px;
+    }
+    canvas {
+      float: left;
     }
   </style>
 </head>
 <body>
-  <h1>Hagger Sgool Week One</h1>
+  <div id="ui">
+    <h1>Hagger Sgool Week One</h1>
+  </div>
   <div id="three"></div>
   <script src="./sphere.js"></script>
 </body>
