@@ -115,7 +115,6 @@ material = new THREE.ShaderMaterial({
 // create a new mesh with sphere geometry -
 // we will cover the sphereMaterial next!
 var sphere = new THREE.Mesh(geometry, material);
-sphere.matrixAutoUpdate = false;
 
 // add the sphere to the scene
 scene.add(sphere);
@@ -128,7 +127,7 @@ function render() {
   atmosphereUniforms.timer.value += delta;
 
   // rotate the sphere
-  sphere.rotation.y += Math.PI * 2 * delta / 30;
+  sphere.rotation.y += delta / 30;
 
   // update controls
   controls.update(delta);
