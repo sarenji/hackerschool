@@ -34,11 +34,6 @@ scene.add(camera);
 var controls = new THREE.TrackballControls(camera);
 controls.keys = [];
 
-// initialize uniforms for atmosphere shader
-var atmosphereUniforms = {
-  timer: { type: "f", value: 0.0 },
-};
-
 // create fresnel shader
 var Shaders = {
   'earth' : {
@@ -67,7 +62,9 @@ var Shaders = {
     ].join('\n')
   },
   'atmosphere' : {
-    uniforms: {},
+    uniforms: {
+      timer: { type: "f", value: 0.0 }
+    },
     vertexShader: [
       'varying vec3 vNormal;',
       'void main() {',
@@ -88,11 +85,11 @@ var Shaders = {
 };
 
 // Taken from Google DAT.Globe
-var shader, uniforms, material;
+var shader, uniforms, material, atmosphereUniforms;
 var geometry = new THREE.SphereGeometry(50, 50, 50);
 
 shader = Shaders['atmosphere'];
-uniforms = THREE.UniformsUtils.clone(shader.uniforms);
+atmosphereUniforms = THREE.UniformsUtils.clone(shader.uniforms);
 material = new THREE.ShaderMaterial({
   uniforms: atmosphereUniforms,
   vertexShader: shader.vertexShader,
