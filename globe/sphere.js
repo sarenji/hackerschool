@@ -120,15 +120,6 @@ sphere.matrixAutoUpdate = false;
 // add the sphere to the scene
 scene.add(sphere);
 
-// initialize point lighting
-var light = new THREE.PointLight( 0xfff5f2 );
-light.position.set(-50, 50, 50);
-scene.add( light );
-
-// add subtle ambient lighting
-var ambientLight = new THREE.AmbientLight(0xcccccc);
-scene.add(ambientLight);
-
 // repeatedly render
 function render() {
   var delta = clock.getDelta();
@@ -138,13 +129,6 @@ function render() {
 
   // rotate the sphere
   sphere.rotation.y += Math.PI * 2 * delta / 30;
-
-  // also rotate the lights
-  light.position.set(
-    Math.cos(Math.PI * 2 * delta / 60) * 50,
-    50,
-    Math.sin(Math.PI * delta / 60) * 50
-  );
 
   // update controls
   controls.update(delta);
