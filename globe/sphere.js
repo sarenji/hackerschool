@@ -11,7 +11,7 @@ var texture = THREE.ImageUtils.loadTexture('world.jpg');
 
 var clock = new THREE.Clock();
 
-var renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(WIDTH, HEIGHT);
 document.body.appendChild(renderer.domElement);
 
