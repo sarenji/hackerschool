@@ -34,6 +34,11 @@ scene.add(camera);
 var controls = new THREE.TrackballControls(camera);
 controls.keys = [];
 
+// initialize uniforms for atmosphere shader
+var atmosphereUniforms = {
+  timer: { type: "f", value: 0.0 },
+};
+
 // create fresnel shader
 var Shaders = {
   'earth' : {
@@ -56,7 +61,7 @@ var Shaders = {
       'void main() {',
         'vec3 diffuse = texture2D( texture, vUv ).xyz;',
         'float intensity = 1.05 - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) );',
-        'vec3 atmosphere = vec3( 0.47, 0.84, 1.0 ) * pow( intensity, 3.0 );',
+        'vec3 atmosphere = vec3( 0.47, 0.84, 1.0 ) * pow( intensity, 4.0 );',
         'gl_FragColor = vec4( diffuse + atmosphere, 1.0 );',
       '}'
     ].join('\n')
@@ -72,8 +77,10 @@ var Shaders = {
     ].join('\n'),
     fragmentShader: [
       'varying vec3 vNormal;',
+      'uniform float timer;',
       'void main() {',
-        'float intensity = pow( 0.8 - dot( vNormal, vec3( 0, 0, 1.0 ) ), 12.0 );',
+        'float intensity = pow( 0.8 - dot( vNormal, vec3( 0, 0, 1.0 ) ), 4.0 );',
+        'intensity = intensity * (0.8 + 0.2 * cos( timer ));',
         'gl_FragColor = vec4( 0.47, 0.84, 1.0, 1.0 ) * intensity;',
       '}'
     ].join('\n')
@@ -87,7 +94,7 @@ var geometry = new THREE.SphereGeometry(50, 50, 50);
 shader = Shaders['atmosphere'];
 uniforms = THREE.UniformsUtils.clone(shader.uniforms);
 material = new THREE.ShaderMaterial({
-  uniforms: uniforms,
+  uniforms: atmosphereUniforms,
   vertexShader: shader.vertexShader,
   fragmentShader: shader.fragmentShader
 });
@@ -128,6 +135,9 @@ scene.add(ambientLight);
 // repeatedly render
 function render() {
   var delta = clock.getDelta();
+
+  // update timer for shader
+  atmosphereUniforms.timer.value += delta;
 
   // rotate the sphere
   sphere.rotation.y += Math.PI * 2 * delta / 30;
