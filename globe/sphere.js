@@ -38,7 +38,10 @@ controls.keys = [];
 var Shaders = {
   'earth' : {
     uniforms: {
-      'texture': { type: 't', value: 0, texture: null }
+      'texture': { type: 't', value: 0, texture: null },
+      'rColor': { type: 'f', value: 0.47 },
+      'gColor': { type: 'f', value: 0.84 },
+      'bColor': { type: 'f', value: 1.0 }
     },
     vertexShader: [
       'varying vec3 vNormal;',
@@ -51,12 +54,15 @@ var Shaders = {
     ].join('\n'),
     fragmentShader: [
       'uniform sampler2D texture;',
+      'uniform float rColor;',
+      'uniform float gColor;',
+      'uniform float bColor;',
       'varying vec3 vNormal;',
       'varying vec2 vUv;',
       'void main() {',
         'vec3 diffuse = texture2D( texture, vUv ).xyz;',
-        'float intensity = 1.0 - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) );',
-        'vec3 atmosphere = vec3( 0.47, 0.84, 1.0 ) * pow( intensity, 4.0 );',
+        'float intensity = 1.25 - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) );',
+        'vec3 atmosphere = vec3( rColor, gColor, bColor ) * pow( intensity, 4.0 );',
         'gl_FragColor = vec4( diffuse + atmosphere, 1.0 );',
       '}'
     ].join('\n')
@@ -77,7 +83,7 @@ var Shaders = {
       'uniform float timer;',
       'void main() {',
         'float intensity = pow( 0.8 - dot( vNormal, vec3( 0, 0, 1.0 ) ), 4.0 );',
-        'intensity = intensity * (0.8 + 0.2 * cos( timer ));',
+        'intensity *= 0.8 + 0.2 * cos( timer );',
         'gl_FragColor = vec4( 0.47, 0.84, 1.0, 1.0 ) * intensity;',
       '}'
     ].join('\n')
