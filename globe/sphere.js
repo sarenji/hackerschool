@@ -125,7 +125,7 @@ scene.add(sphere);
 
 // create torus
 var mergedGeometry = new THREE.Geometry();
-geometry = new THREE.TorusGeometry(1, .2, 30, 30);
+geometry = new THREE.TorusGeometry(1.2, .2, 30, 30);
 shader = Shaders['earth'];
 uniforms = THREE.UniformsUtils.clone(shader.uniforms);
 uniforms['texture'].texture = texture;
@@ -141,14 +141,14 @@ torus.rotation.x = Math.PI / 2;
 THREE.GeometryUtils.merge(mergedGeometry, torus);
 torus = new THREE.Mesh(mergedGeometry, material);
 
-scene.add(torus);
+var tiny = new THREE.Mesh(geometry, material);
+
 
 // connects a torus and a position vector to Hacker School.
-function connectToHS(torus, latitude, longitude) {
+function connectToHS(mesh, latitude, longitude) {
+  var torus = new THREE.Mesh(mesh.geometry, mesh.material);
   var hsLat = 40.702964;
   var hsLong = -73.989481;
-  var latitude = 37.7750;
-  var longitude = -122.4183;
   var avgLatitude = (latitude + hsLat) / 2;
   var avgLongitude = (longitude + hsLong) / 2;
   var avgPosition = latlongToArray(avgLatitude, avgLongitude);
@@ -165,6 +165,7 @@ function connectToHS(torus, latitude, longitude) {
   torus.position.set.apply(torus.position, avgPosition);
   torus.scale.x = torus.scale.y = torus.scale.z = radius;
   torus.lookAt(mesh.position);
+  scene.add(torus);
 }
 
 function latlongToArray(latitude, longitude) {
@@ -178,7 +179,10 @@ function latlongToArray(latitude, longitude) {
   ];
 }
 
-connectToHS(torus);
+// San Francisco
+connectToHS(torus, 37.7750, -122.4183);
+// Sweden
+connectToHS(torus, 52.2685, 15.7591);
 
 // repeatedly render
 function render() {
