@@ -141,28 +141,30 @@ torus.rotation.x = Math.PI / 2;
 THREE.GeometryUtils.merge(mergedGeometry, torus);
 torus = new THREE.Mesh(mergedGeometry, material);
 
-var tiny = new THREE.Mesh(geometry, material);
-
-
 // connects a torus and a position vector to Hacker School.
 function connectToHS(mesh, latitude, longitude) {
   var torus = new THREE.Mesh(mesh.geometry, mesh.material);
   var hsLat = 40.702964;
   var hsLong = -73.989481;
-  var avgLatitude = (latitude + hsLat) / 2;
-  var avgLongitude = (longitude + hsLong) / 2;
-  var avgPosition = latlongToArray(avgLatitude, avgLongitude);
   var hsPosition = latlongToArray(hsLat, hsLong);
   var targetPosition = latlongToArray(latitude, longitude);
   var numDimensions = hsPosition.length;
   var radius = 0;
+
+  // Calculate the average position
+  var avgPosition = [];
+  for (var i = 0; i < numDimensions; i++) {
+    avgPosition.push((hsPosition[i] + targetPosition[i]) / 2);
+  }
+  avgPosition = new THREE.Vector3(avgPosition[0], avgPosition[1], avgPosition[2]);
+  avgPosition.setLength(50);
 
   // Calculate and apply the new scale of the torus
   for (var i = 0; i < numDimensions; i++) {
     radius += Math.abs(hsPosition[i] - targetPosition[i]) / numDimensions;
   }
 
-  torus.position.set.apply(torus.position, avgPosition);
+  torus.position = avgPosition;
   torus.scale.x = torus.scale.y = torus.scale.z = radius;
   torus.lookAt(mesh.position);
   scene.add(torus);
