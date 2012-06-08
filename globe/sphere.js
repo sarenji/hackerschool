@@ -123,11 +123,24 @@ var sphere = new THREE.Mesh(geometry, material);
 sphere.matrixAutoUpdate = true;
 scene.add(sphere);
 
-// add torus
+// create torus
+var mergedGeometry = new THREE.Geometry();
 geometry = new THREE.TorusGeometry(1, .2, 30, 30);
-var torus = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({
-  color: 0x3bf4ff
-}));
+shader = Shaders['earth'];
+uniforms = THREE.UniformsUtils.clone(shader.uniforms);
+uniforms['texture'].texture = texture;
+material = new THREE.ShaderMaterial({
+  uniforms: uniforms,
+  vertexShader: shader.vertexShader,
+  fragmentShader: shader.fragmentShader
+});
+
+// Rotate torus and save as new geometry
+var torus = new THREE.Mesh(geometry, material);
+torus.rotation.x = Math.PI / 2;
+THREE.GeometryUtils.merge(mergedGeometry, torus);
+torus = new THREE.Mesh(mergedGeometry, material);
+
 scene.add(torus);
 
 // connects a torus and a position vector to Hacker School.
