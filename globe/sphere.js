@@ -125,6 +125,50 @@ var sphere = new THREE.Mesh(geometry, material);
 // add the sphere to the scene
 scene.add(sphere);
 
+// add torus
+geometry = new THREE.TorusGeometry(1, .2, 30, 30);
+var torus = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({
+  color: 0x3bf4ff
+}));
+scene.add(torus);
+
+// connects a torus and a position vector to Hacker School.
+function connectToHS(torus, latitude, longitude) {
+  var hsLat = 40.702964;
+  var hsLong = 73.989481;
+  var latitude = 37.7750;
+  var longitude = 122.4183;
+  var avgLatitude = (latitude + hsLat) / 2;
+  var avgLongitude = (longitude + hsLong) / 2;
+  var avgPosition = latlongToArray(avgLatitude, avgLongitude);
+  var hsPosition = latlongToArray(hsLat, hsLong);
+  var targetPosition = latlongToArray(latitude, longitude);
+  var numDimensions = hsPosition.length;
+  var radius = 0;
+
+  // Calculate and apply the new scale of the torus
+  for (var i = 0; i < numDimensions; i++) {
+    radius += Math.abs(hsPosition[i] - targetPosition[i]) / numDimensions;
+  }
+
+  torus.position.set.apply(torus.position, avgPosition);
+  torus.scale.x = torus.scale.y = torus.scale.z = radius;
+  torus.lookAt(mesh.position);
+}
+
+function latlongToArray(latitude, longitude) {
+  var phi = (90 - latitude) * Math.PI / 180;
+  var theta = (90 - longitude) * Math.PI / 180;
+
+  return [
+    50 * Math.sin(phi) * Math.sin(theta),
+    50 * Math.cos(phi),
+    50 * Math.sin(phi) * Math.cos(theta)
+  ];
+}
+
+connectToHS(torus);
+
 // repeatedly render
 function render() {
   var delta = clock.getDelta();
