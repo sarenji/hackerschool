@@ -92,7 +92,7 @@ var Shaders = {
 
 // Taken from Google DAT.Globe
 var shader, uniforms, material, atmosphereUniforms;
-var geometry = new THREE.SphereGeometry(50, 50, 50);
+var geometry = new THREE.SphereGeometry(50, 40, 30);
 
 shader = Shaders['atmosphere'];
 atmosphereUniforms = THREE.UniformsUtils.clone(shader.uniforms);
@@ -118,11 +118,9 @@ material = new THREE.ShaderMaterial({
   fragmentShader: shader.fragmentShader
 });
 
-// create a new mesh with sphere geometry -
-// we will cover the sphereMaterial next!
+// add the globe to the scene
 var sphere = new THREE.Mesh(geometry, material);
-
-// add the sphere to the scene
+sphere.matrixAutoUpdate = true;
 scene.add(sphere);
 
 // add torus
@@ -177,7 +175,7 @@ function render() {
   atmosphereUniforms.timer.value += delta;
 
   // rotate the sphere
-  sphere.rotation.y += delta / 30;
+  // sphere.rotation.y += delta / 30;
 
   // update controls
   controls.update(delta);
