@@ -146,9 +146,9 @@ scene.add(torus);
 // connects a torus and a position vector to Hacker School.
 function connectToHS(torus, latitude, longitude) {
   var hsLat = 40.702964;
-  var hsLong = 73.989481;
+  var hsLong = -73.989481;
   var latitude = 37.7750;
-  var longitude = 122.4183;
+  var longitude = -122.4183;
   var avgLatitude = (latitude + hsLat) / 2;
   var avgLongitude = (longitude + hsLong) / 2;
   var avgPosition = latlongToArray(avgLatitude, avgLongitude);
@@ -169,7 +169,7 @@ function connectToHS(torus, latitude, longitude) {
 
 function latlongToArray(latitude, longitude) {
   var phi = (90 - latitude) * Math.PI / 180;
-  var theta = (90 - longitude) * Math.PI / 180;
+  var theta = (90 + longitude) * Math.PI / 180;
 
   return [
     50 * Math.sin(phi) * Math.sin(theta),
