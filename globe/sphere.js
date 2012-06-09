@@ -157,7 +157,6 @@ function connectToHS(mesh, latitude, longitude) {
     avgPosition.push((hsPosition[i] + targetPosition[i]) / 2);
   }
   avgPosition = new THREE.Vector3(avgPosition[0], avgPosition[1], avgPosition[2]);
-  avgPosition.setLength(50);
 
   // Calculate and apply the new scale of the torus
   for (var i = 0; i < numDimensions; i++) {
