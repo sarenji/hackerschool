@@ -149,12 +149,16 @@ function connectToHS(material, latitude, longitude) {
   for (var i = 0; i < numDimensions; i++) {
     avgPosition.push((hsPosition[i] + targetPosition[i]) / 2);
   }
-  avgPosition = new THREE.Vector3(avgPosition[0], avgPosition[1], avgPosition[2]);
 
-  // Calculate and apply the new scale of the torus
+  // Calculate the radius of the torus.
+  // It should be the midpoint's distance to either of the two points.
   for (var i = 0; i < numDimensions; i++) {
-    radius += Math.abs(hsPosition[i] - targetPosition[i]) / numDimensions;
+    radius += Math.pow(hsPosition[i] - avgPosition[i], 2);
   }
+  radius = Math.sqrt(radius);
+
+  // Turn avgPosition into a Vector3.
+  avgPosition = new THREE.Vector3(avgPosition[0], avgPosition[1], avgPosition[2]);
 
   geometry = new THREE.TorusGeometry(radius, 1, 30, 30);
   mergedGeometry = new THREE.Geometry();
