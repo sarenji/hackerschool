@@ -192,9 +192,6 @@ function render() {
   // update timer for shader
   atmosphereUniforms.timer.value += delta;
 
-  // rotate the sphere
-  // sphere.rotation.y += delta / 30;
-
   // update controls
   controls.update(delta);
 
