@@ -133,6 +133,7 @@ torusMaterial = new THREE.MeshBasicMaterial({
 function connectToHS(material, latitude, longitude) {
   var hsLat = 40.702964;
   var hsLong = -73.989481;
+  // I convert latitude/longitude to cartesian coords here
   var hsPosition = latlongToArray(hsLat, hsLong);
   var targetPosition = latlongToArray(latitude, longitude);
   var numDimensions = hsPosition.length;
@@ -145,8 +146,7 @@ function connectToHS(material, latitude, longitude) {
     avgPosition.push((hsPosition[i] + targetPosition[i]) / 2);
   }
 
-  // Calculate the radius of the torus.
-  // It should be the midpoint's distance to either of the two points.
+  // The radius of the torus is the midpoint's distance to one of the two points
   for (var i = 0; i < numDimensions; i++) {
     radius += Math.pow(hsPosition[i] - avgPosition[i], 2);
   }
@@ -155,6 +155,7 @@ function connectToHS(material, latitude, longitude) {
   // Turn avgPosition into a Vector3.
   avgPosition = new THREE.Vector3(avgPosition[0], avgPosition[1], avgPosition[2]);
 
+  // create the geometry of the vector
   geometry = new THREE.TorusGeometry(radius, 1, 30, 30);
   mergedGeometry = new THREE.Geometry();
 
@@ -163,9 +164,12 @@ function connectToHS(material, latitude, longitude) {
   THREE.GeometryUtils.merge(mergedGeometry, torus);
   torus = new THREE.Mesh(mergedGeometry, material);
 
+  // rotate torus to connect the two points.
   torus.position = avgPosition;
   torus.up = new THREE.Vector3(hsPosition[0] - targetPosition[0], hsPosition[1] - targetPosition[1], hsPosition[2] - targetPosition[2]);
   torus.lookAt(new THREE.Vector3(0, 0, 0));
+
+  // we want to display this torus right now.
   scene.add(torus);
 }
 
