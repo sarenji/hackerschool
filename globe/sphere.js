@@ -1,7 +1,5 @@
 var $window = $(window);
 
-$window.load(function() {
-
 // set the scene size
 var WIDTH = $window.width(),
     HEIGHT = $window.height();
@@ -206,5 +204,3 @@ function render() {
   requestAnimationFrame(render);
 }
 render();
-
-});
