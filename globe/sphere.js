@@ -164,11 +164,12 @@ function connectToHS(material, latitude, longitude) {
   mergedGeometry = new THREE.Geometry();
 
   torus = new THREE.Mesh(geometry, material);
-  torus.rotation.x = Math.PI / 2;
+  torus.rotation.y = Math.PI / 2;
   THREE.GeometryUtils.merge(mergedGeometry, torus);
   torus = new THREE.Mesh(mergedGeometry, material);
 
   torus.position = avgPosition;
+  torus.up = new THREE.Vector3(hsPosition[0] - targetPosition[0], hsPosition[1] - targetPosition[1], hsPosition[2] - targetPosition[2]);
   torus.lookAt(new THREE.Vector3(0, 0, 0));
   scene.add(torus);
 }
