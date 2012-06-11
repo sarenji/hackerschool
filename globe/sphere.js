@@ -184,6 +184,8 @@ function latlongToArray(latitude, longitude) {
 connectToHS(torusMaterial, 37.7750, -122.4183);
 // Sweden
 connectToHS(torusMaterial, 52.2685, 15.7591);
+// South america
+connectToHS(torusMaterial, -14.6048, -59.0625);
 
 // repeatedly render
 function render() {
