@@ -125,13 +125,8 @@ sphere.matrixAutoUpdate = true;
 scene.add(sphere);
 
 // create torus mesh
-torusShader = Shaders['earth'];
-torusUniforms = THREE.UniformsUtils.clone(torusShader.uniforms);
-torusUniforms['texture'].texture = texture;
-torusMaterial = new THREE.ShaderMaterial({
-  uniforms: torusUniforms,
-  vertexShader: torusShader.vertexShader,
-  fragmentShader: torusShader.fragmentShader
+torusMaterial = new THREE.MeshBasicMaterial({
+  color: 0x33ccff
 });
 
 // connects a torus and a position vector to Hacker School.
