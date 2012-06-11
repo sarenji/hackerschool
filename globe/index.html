@@ -12,16 +12,19 @@
       background: black;
       font: 100% "Helvetica Neue", sans-serif;
     }
-    h1 {
+    h1, p {
       color: white;
       font-weight: 300;
       margin-top: 0;
+    }
+    p {
+      font-size: 12px;
     }
     #ui {
       position: absolute;
       top: 10px;
       left: 10px;
-      width: 200px;
+      width: 220px;
     }
     canvas {
       float: left;
@@ -30,7 +33,8 @@
 </head>
 <body>
   <div id="ui">
-    <h1>Hagger Sgool Week One</h1>
+    <h1>Hacker School <br>week one</h1>
+    <p>A map of the origins of Hacker Schoolers, all converging onto a single point: NYC.</p>
   </div>
   <div id="three"></div>
   <script src="./sphere.js"></script>
