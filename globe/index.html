@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sphere example</title>
+  <title>Globe | Hacker School &mdash; week one</title>
   <meta charset="utf-8"/>
   <script src="./Three.js"></script>
   <script src="./jquery.js"></script>
@@ -26,6 +26,13 @@
       left: 10px;
       width: 220px;
     }
+    a {
+      color: #7ac;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
     canvas {
       float: left;
     }
@@ -35,6 +42,7 @@
   <div id="ui">
     <h1>Hacker School <br>week one</h1>
     <p>A map of the origins of Hacker Schoolers, all converging onto a single point: NYC.</p>
+    <p>Based on Google's <a href="http://www.chromeexperiments.com/globe">WebGL Globe</a>.</p>
   </div>
   <div id="three"></div>
   <script src="./globe.js"></script>
