@@ -123,11 +123,6 @@ function Render3DGlobe(locationJSON) {
   sphere.matrixAutoUpdate = true;
   scene.add(sphere);
 
-  // create torus mesh
-  torusMaterial = new THREE.MeshBasicMaterial({
-    color: 0x33ccff
-  });
-
   // connects a torus and a position vector to Hacker School.
   function connectToHS(material, latitude, longitude) {
     var hsLat = 40.702964;
@@ -188,6 +183,10 @@ function Render3DGlobe(locationJSON) {
     if (locationJSON.hasOwnProperty(key)) {
       var latitude = locationJSON[key].latitude;
       var longitude = locationJSON[key].longitude;
+      // create random torus mesh
+      torusMaterial = new THREE.MeshBasicMaterial({
+        color: Math.floor(Math.random() * 0xFFFFFF)
+      });
       connectToHS(torusMaterial, latitude, longitude);
     }
   }
